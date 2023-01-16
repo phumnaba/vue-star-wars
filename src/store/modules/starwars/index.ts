@@ -12,7 +12,7 @@ const StarWarsState: Module<starWarsState, Record<string, never>> = {
     selectedCategory: [],
     isAllEntitiesEmpty: false,
     selectedCategoryData: [],
-    selectedCharacter: initialCharacterState,
+    selectedCharacter: { ...initialCharacterState },
   },
   actions,
   getters,

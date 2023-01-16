@@ -76,22 +76,6 @@
             </v-col>
             <v-col cols="12" sm="6" md="6">
               <v-text-field
-                label="Created date"
-                v-model.lazy="selectedCharacter.created"
-                placeholder="2014-12-09T13:50:51.644000Z"
-                disabled
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6" md="6">
-              <v-text-field
-                label="Edited date"
-                v-model.lazy="selectedCharacter.edited"
-                placeholder="2014-12-20T21:17:56.891000Z"
-                disabled
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6" md="6">
-              <v-text-field
                 label="URL"
                 v-model.lazy="selectedCharacter.url"
                 placeholder="https://swapi.dev/api/people/1/"

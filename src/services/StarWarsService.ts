@@ -7,14 +7,14 @@ export default class StarWarsService {
    * @returns {Promise}
    */
   static discoverStarWarEntities(query: string) {
-    const discoverEntitiesEndpoints: any[] = [];
+    const discoverEntitiesPromiseArr: any[] = [];
     const baseUrl = process.env.VUE_APP_BASE_URL;
     entities.forEach((entity: string) => {
-      discoverEntitiesEndpoints.push(
+      discoverEntitiesPromiseArr.push(
         axios.get(`${baseUrl}${entity}/?search=${query}`)
       );
     });
 
-    return Promise.allSettled(discoverEntitiesEndpoints);
+    return Promise.allSettled(discoverEntitiesPromiseArr);
   }
 }

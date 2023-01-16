@@ -160,15 +160,15 @@ export default Vue.extend({
     },
     addCharacter() {
       this.showAddCharacterDialog = true;
-      this.$store.commit(SET_SELECTED_CHARACTER, initialCharacterState);
+      this.$store.commit(SET_SELECTED_CHARACTER, { ...initialCharacterState });
     },
     editCharacter(character: never[]) {
       this.showEditCharacterDialog = true;
-      this.$store.commit(SET_SELECTED_CHARACTER, character);
+      this.$store.commit(SET_SELECTED_CHARACTER, { ...character });
     },
     deleteCharacter(character: never[]) {
       this.showDeleteCharacterDialog = true;
-      this.$store.commit(SET_SELECTED_CHARACTER, character);
+      this.$store.commit(SET_SELECTED_CHARACTER, { ...character });
     },
     closeModal() {
       this.showAddCharacterDialog = false;
