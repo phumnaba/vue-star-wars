@@ -14,6 +14,7 @@
     - [Run your unit tests](#run-your-unit-tests)
     - [Lints and fixes files](#lints-and-fixes-files)
     - [Customize configuration](#customize-configuration)
+    - [Docker configuration](#docker-configuration)
 - [References](#references)
 
 ## Getting started
