@@ -2,7 +2,12 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <v-img src="star-wars-logo.png" class="my-3" contain height="200" />
+        <v-img
+          src="@/assets/images/star-wars-logo.png"
+          class="my-3"
+          contain
+          height="200"
+        />
       </v-col>
       <v-col cols="12">
         <div class="d-dropdown">
@@ -20,11 +25,11 @@
           </div>
           <div v-if="isValidSearch" class="d-dropdown--options-wrapper">
             <div
-              class="d-dropdown-option"
+              :class="{ 'd-dropdown-option': category?.options?.length > 0 }"
               v-for="category in filteredCategories"
               :key="category.id"
             >
-              <div v-if="category.options.length">
+              <div v-if="category.options.length > 0">
                 <div class="d-dropdown-group-title">
                   {{ category.groupTitle }}
                 </div>
@@ -145,52 +150,3 @@ export default Vue.extend({
   },
 });
 </script>
-<style>
-* {
-  box-sizing: border-box;
-}
-.d-dropdown {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  font-size: 16px;
-}
-.d-dropdown--options-wrapper {
-  border: 1px solid #ddd;
-  position: absolute;
-  top: 63%;
-  left: 0;
-  right: 0;
-}
-.d-dropdown--options-wrapper .d-dropdown-option {
-  border-top: 1px solid #ddd;
-}
-.d-dropdown--options-wrapper .d-dropdown-option:first-child {
-  border-top: 0;
-}
-
-.d-dropdown-group-title {
-  padding: 5px;
-  font-weight: 500;
-  background: #f9f9f9;
-}
-
-.d-dropdown-option ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-ul li {
-  padding: 5px;
-}
-
-ul li:hover {
-  background: #f9f9f9;
-  cursor: pointer;
-}
-.view-all {
-  text-align: right;
-}
-</style>
