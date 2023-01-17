@@ -8,13 +8,15 @@ const routes: Array<RouteConfig> = [
     path: "/",
     name: "search",
     component: () =>
-      import(/* webpackChunkName: "search" */ "../views/Search.vue"),
+      import(/* webpackChunkName: "search" */ "@/views/search/Search.vue"),
   },
   {
     path: "/entity/:id",
     name: "entity",
     component: () =>
-      import(/* webpackChunkName: "entity-list" */ "@/views/EntityList.vue"),
+      import(
+        /* webpackChunkName: "entity-list" */ "@/views/entity/EntityList.vue"
+      ),
     meta: { transition: "slide-right" },
   },
 ];
