@@ -1,5 +1,5 @@
-import { entities } from "@/utilities";
 import axios from "axios";
+import { entities } from "@/utilities";
 
 export default class StarWarsService {
   /**
@@ -7,7 +7,7 @@ export default class StarWarsService {
    * @returns {Promise}
    */
   static discoverStarWarEntities(query: string) {
-    const discoverEntitiesPromiseArr: any[] = [];
+    const discoverEntitiesPromiseArr: Promise<any>[] = [];
     const baseUrl = process.env.VUE_APP_BASE_URL;
     entities.forEach((entity: string) => {
       discoverEntitiesPromiseArr.push(

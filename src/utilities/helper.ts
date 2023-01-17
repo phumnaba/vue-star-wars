@@ -8,3 +8,7 @@ export function mapTwoWay<T>(getter: string, mutation: string) {
     },
   };
 }
+
+export const delay = (ms: number): Promise<any> => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};

@@ -6,6 +6,8 @@ import {
   IS_ALL_ENTITIES_EMPTY,
   GET_CATEGORY_DATA,
   GET_SELECTED_CHARACTER,
+  IS_CHARACTER_ACTION_LOADING,
+  IS_CHARACTER_DELETE_LOADING,
 } from "./getter-types";
 import { starWarsState } from "../iStarWarsState";
 
@@ -27,5 +29,11 @@ export const getters: GetterTree<starWarsState, Record<string, never>> = {
   },
   [GET_SELECTED_CHARACTER](state) {
     return state.selectedCharacter;
+  },
+  [IS_CHARACTER_ACTION_LOADING](state) {
+    return state.isCharacterActionLoading;
+  },
+  [IS_CHARACTER_DELETE_LOADING](state) {
+    return state.isCharacterDeleteLoading;
   },
 };

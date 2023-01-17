@@ -23,7 +23,14 @@
       <v-card-actions style="height: 70px">
         <v-spacer></v-spacer>
         <v-btn text width="200" @click.native="close"> No </v-btn>
-        <v-btn width="200" color="error" @click.native="submit"> Yes </v-btn>
+        <v-btn
+          width="200"
+          color="error"
+          @click.native="submit"
+          :loading="isCharacterDeleteLoading"
+        >
+          Yes
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -31,6 +38,10 @@
 <script lang="ts">
 import Vue from "vue";
 import { REMOVE_CHARACTER } from "@/store/modules/starwars/actions/action-types";
+import { IS_CHARACTER_DELETE_LOADING } from "@/store/modules/starwars/getters/getter-types";
+import { SET_CHARACTER_DELETE_LOADING } from "@/store/modules/starwars/mutations/mutation-types";
+import { SET_SNACKBAR_DATA } from "@/store/modules/snackbar/mutations/mutation-types";
+import { delay } from "@/utilities/helper";
 
 export default Vue.extend({
   name: "DeleteCharacterModal",
@@ -44,12 +55,31 @@ export default Vue.extend({
       default: () => ({}),
     },
   },
-  methods: {
-    submit() {
-      this.$store.dispatch(REMOVE_CHARACTER, this.selectedCharacter.id);
-      this.$emit("update:isOpen", false);
+  computed: {
+    isCharacterDeleteLoading(): boolean {
+      return this.$store.getters[IS_CHARACTER_DELETE_LOADING];
     },
-    close() {
+  },
+  methods: {
+    async submit(): Promise<any> {
+      this.$store.commit(SET_CHARACTER_DELETE_LOADING, true);
+      await delay(2000);
+      this.$store.dispatch(REMOVE_CHARACTER, this.selectedCharacter.id);
+      this.$store.commit(SET_CHARACTER_DELETE_LOADING, false);
+      this.showSuccessNotification(
+        `Charcter record with name ${this.selectedCharacter.name} deleted successfully`
+      );
+      this.close();
+    },
+    showSuccessNotification(message: string): void {
+      const characterSubmitSuccess = {
+        show: true,
+        message,
+        color: "success",
+      };
+      this.$store.commit(SET_SNACKBAR_DATA, characterSubmitSuccess);
+    },
+    close(): void {
       this.$emit("update:isOpen", false);
     },
   },

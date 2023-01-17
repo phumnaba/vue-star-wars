@@ -1,5 +1,5 @@
 <template>
-  <div class="entity-table-wrapper">
+  <div>
     <v-data-table
       :headers="CHARACTER_TABLE_HEADERS"
       :items="items"
@@ -116,14 +116,15 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { CHARACTER_TABLE_HEADERS, initialCharacterState } from "@/utilities";
-import { SET_SELECTED_CHARACTER } from "@/store/modules/starwars/mutations/mutation-types";
 import ManageCharacterForm from "@/views/character/ManageCharacterForm.vue";
 import DeleteCharacterModal from "@/views/character/DeleteCharacterModal.vue";
+import { SET_SELECTED_CHARACTER } from "@/store/modules/starwars/mutations/mutation-types";
 import {
   GET_CATEGORY_DATA,
   GET_SELECTED_CHARACTER,
 } from "@/store/modules/starwars/getters/getter-types";
+import { CHARACTER_TABLE_HEADERS, initialCharacterState } from "@/utilities";
+import { iCharacter } from "@/interface/iCharacter";
 
 export default Vue.extend({
   name: "CharactersTable",
@@ -134,7 +135,6 @@ export default Vue.extend({
     },
   },
   data: () => ({
-    isShown: false,
     showAddCharacterDialog: false,
     showEditCharacterDialog: false,
     showDeleteCharacterDialog: false,
@@ -143,35 +143,32 @@ export default Vue.extend({
   }),
   components: { ManageCharacterForm, DeleteCharacterModal },
   computed: {
-    items() {
+    items(): Array<any> {
       return this.$store.getters[GET_CATEGORY_DATA];
     },
-    selectedCharacter() {
+    selectedCharacter(): iCharacter {
       return this.$store.getters[GET_SELECTED_CHARACTER];
     },
   },
   methods: {
-    selectCharacter(character: never[]) {
+    selectCharacter(character: iCharacter): void {
       this.isActionActive = true;
       this.$store.commit(SET_SELECTED_CHARACTER, character);
     },
-    deSelectCharacter() {
+    deSelectCharacter(): void {
       this.isActionActive = false;
     },
-    addCharacter() {
+    addCharacter(): void {
       this.showAddCharacterDialog = true;
       this.$store.commit(SET_SELECTED_CHARACTER, { ...initialCharacterState });
     },
-    editCharacter(character: never[]) {
+    editCharacter(character: iCharacter): void {
       this.showEditCharacterDialog = true;
       this.$store.commit(SET_SELECTED_CHARACTER, { ...character });
     },
-    deleteCharacter(character: never[]) {
+    deleteCharacter(character: iCharacter): void {
       this.showDeleteCharacterDialog = true;
       this.$store.commit(SET_SELECTED_CHARACTER, { ...character });
-    },
-    closeModal() {
-      this.showAddCharacterDialog = false;
     },
   },
 });

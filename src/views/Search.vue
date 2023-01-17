@@ -22,7 +22,7 @@
             <div
               class="d-dropdown-option"
               v-for="category in filteredCategories"
-              :key="category._id"
+              :key="category.id"
             >
               <div v-if="category.options.length">
                 <div class="d-dropdown-group-title">
@@ -62,6 +62,7 @@ import {
   SET_CATEGORY_DATA,
   SET_SELECTED_CATEGORY,
 } from "@/store/modules/starwars/mutations/mutation-types";
+import { iCategory } from "@/interface/iCategory";
 import { v4 as uuidv4 } from "uuid";
 
 export default Vue.extend({
@@ -72,19 +73,19 @@ export default Vue.extend({
     timeoutId: 0,
   }),
   computed: {
-    categories() {
+    categories(): Array<any> {
       return this.$store.getters[GET_CATEGORIES];
     },
-    isCategoriesLoading() {
+    isCategoriesLoading(): boolean {
       return this.$store.getters[IS_CATEGORIES_LOADING];
     },
     isAllEntitiesEmpty(): boolean {
       return this.$store.getters[IS_ALL_ENTITIES_EMPTY];
     },
-    filteredCategories() {
-      let entities: any[] = [];
+    filteredCategories(): Array<iCategory> {
+      let entities: Array<iCategory> = [];
       this.categories?.forEach((category: any) => {
-        let options: any[] = [];
+        let options: string[] = [];
         const groupTitle = Object.keys(category)[0];
         for (const cat in category) {
           category[cat]?.forEach((entity: any) =>
@@ -93,7 +94,7 @@ export default Vue.extend({
         }
         entities.push({
           groupTitle,
-          _id: groupTitle,
+          id: groupTitle,
           options,
           data: category[groupTitle],
         });
@@ -109,7 +110,7 @@ export default Vue.extend({
     },
   },
   methods: {
-    onSearch() {
+    onSearch(): void {
       if (this.searchEntityQuery.trim() !== "") {
         this.isDropDownActive = true;
         clearTimeout(this.timeoutId);
@@ -121,11 +122,11 @@ export default Vue.extend({
         }, 1000);
       } else this.isDropDownActive = false;
     },
-    onCategoryOptionClick(option: any) {
+    onCategoryOptionClick(option: string): void {
       this.searchEntityQuery = option;
       this.onSearch();
     },
-    viewAll(category: any, categoryRoute: string) {
+    viewAll(category: iCategory, categoryRoute: string): void {
       const filteredDataList = category.data.map((data: any) => ({
         ...data,
         id: uuidv4(),
@@ -135,7 +136,7 @@ export default Vue.extend({
       this.$store.commit(SET_CATEGORY_DATA, category.data);
       this.$router.push(`entity/${categoryRoute}`);
     },
-    highlightTerm(text: string) {
+    highlightTerm(text: string): string {
       return text.replaceAll(
         this.searchEntityQuery,
         `<b><mark>${this.searchEntityQuery}</mark></b>`

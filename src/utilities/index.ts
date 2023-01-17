@@ -1,6 +1,7 @@
+import { iCharacter } from "@/interface/iCharacter";
 import { v4 as uuidv4 } from "uuid";
 
-export const entities = [
+export const entities: string[] = [
   "people",
   "films",
   "planets",
@@ -37,7 +38,7 @@ export const CHARACTER_TABLE_HEADERS = [
   { text: "", align: "end", value: "actions", sortable: false },
 ];
 
-export const initialCharacterState = {
+export const initialCharacterState: iCharacter = {
   id: uuidv4(),
   birth_year: "",
   created: new Date().toISOString(),

@@ -2,7 +2,7 @@
   <div class="snackbar-wrapper">
     <v-snackbar
       v-for="(snackbar, index) in openedSnackbars"
-      :key="snackbar.text + Math.random"
+      :key="snackbar.message + index"
       :timeout="6000"
       :color="snackbar.color"
       :style="`top: ${index * 60}px`"
@@ -24,14 +24,15 @@
 <script lang="ts">
 import Vue from "vue";
 import { FETCH_SNACKBAR_DATA } from "@/store/modules/snackbar/getters/getter-types";
+import { iSnackbar } from "@/interface";
+
 export default Vue.extend({
   name: "SnackBar",
   computed: {
-    snackbars(): any {
-      console.log(typeof this.$store.getters[FETCH_SNACKBAR_DATA]);
+    snackbars(): Array<iSnackbar> {
       return this.$store.getters[FETCH_SNACKBAR_DATA];
     },
-    openedSnackbars(): any {
+    openedSnackbars(): Array<iSnackbar> {
       return this.snackbars.filter(
         (snackbar: { show: boolean }) => snackbar.show
       );

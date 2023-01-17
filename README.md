@@ -19,9 +19,9 @@
 ## Getting started
 ### Introduction
 
-Star Wars is a simple, modularized, well structured, dockerized, component rich and feature loaded web application built using Vue ecosystem (Vue, Vuetify, VueX, Vue router, Vue CLI, Vue Loader), Typescript and Advance Javascript. 
+Star Wars is a simple, modularized, responsive, well structured, dockerized, component rich and feature loaded web application built using Vue ecosystem (Vue, Vuetify, VueX, Vue router, Vue CLI, Vue Loader), Typescript and Advance Javascript. 
 
-List of the entities fetched from [StarWars API](https://swapi.dev/api/) 
+List of the StarWars entities are fetched from [StarWars API](https://swapi.dev/api/) API available for all the entities and it will return the results based on search query parameter.
 
 ### Features
 Some of the highlighting features of this web application are,
@@ -38,6 +38,8 @@ Some of the highlighting features of this web application are,
 
 - Store based modular, reactive and well structured global state management system.
 
+- Better loading performance with code splitting and debouncing.
+
 ## Components
 
 StarWars web application is built up using core building blocks like Search page, Entity List page and Entity management form components like Add, Update and Delete. These sleek components forms the basis of simple yet apealing User Interface.
@@ -48,8 +50,9 @@ StarWars web application is built up using core building blocks like Search page
 
 This is the main landing or home page from where we can search for different StarWar entities like Characters, Films, Planets, Species, Starships, Vehicles.
 
-- All of the above entities supports a search query string parameter which filters the set of results based on the input search term. 
-- Once the user starts typing in the search input field, the autocomplete style grouped dropdown will be visible where entity name is the title of every group and it will display maximum of 3 items by name or title and the search term will be highlighted in the autocomplete dropdown.
+- All of the above entities supports a search query string parameter which filters the set of results based on the input search term.
+- To improve the search performance and to avoid calling multiple APIs for every input charcter, debouncing with delay of 1000 milliseconds between every character input is implemented.
+- Once the user starts typing in the search input field, the autocomplete style grouped dropdown list will be popped down the input field where entity name is the title of every group and it will display maximum of 3 items by name or title and the search term will be highlighted in the autocomplete dropdown.
 - Each group also contains View All button at the bottom right section which on clicking will redirect to the selected entity's page.
 
 Below is the sample API request url to search people or characters having r2 as a substring.
@@ -71,19 +74,25 @@ The characters table shows details of the character metadata like Name, Gender, 
 <br />
 <img src="src/assets/images/add-character-form.png" height="350" /> <img src="src/assets/images/edit-character-form.png" height="350" /> <img src="src/assets/images/delete-character-modal.png" height="350" width="550" />
 
-These are the different Modal Form components and will be opened on clicking the respective action buttons. Add and Aedit character components built using reusable ManageCharacterForm component. The header and footer submit button text is populated dynamically. The form is having some very basic required validations for the 5 fields which are shown in the character entity table. Apart from these 5 fields, rest other fields will be disabled to edit.
-After entering the valid details and clicking on respective action button i.e. Add Character, Edit Character or Delete character, the characterList will be updated with addition of new object or updation of existing object or deletion of existing object.
+- These are the different Modal Form components and will be opened on clicking the respective action buttons from Characters table. 
+- Add and Edit character components built using reusable ManageCharacterForm component where based on passed props, the modal title and submit button text populated dynamically.
+- The ManageCharacterForm form is having some very basic required validations for the 5 fields which are shown in the character entity table.
+- Apart from these 5 fields, rest other fields will be disabled to edit in Edit mode. 
+- The Add Character button initially will be disabled and once all the mandatory fields have valid data filled in, the button will be enabled.
+- In Edit character modal, if we remove data for any of the mandatory input field(s), then Edit Character button will be disabled.
+- After clicking on delete icon for any character, Delete character confirmation dialog will open and after clicking on Yes button, the selected character gets deleted from the characters list.
+- As there is no API available to store StarWars character, Add and Edit character actions will update the data to the list of characters array stored in VueX store
 
 ## Installation
 
 ### Project setup
-After successfully cloning this project, create a feature branch from development branch for any development work. Then run below command to install all the required dependency packages which are required for running the application locally.
+After successfully cloning this project, create a feature branch from development branch for any development work. Then run below command to install all the required dependencies or packages which are required for setting up and running the application on local environment.
 ```
 npm install
 ```
 
 ### Compiles and hot-reloads for development
-Once all the required dependencies get installed successfully, now its the time to run and host the project on local development environment. Run the below command to do so. This webpack script will compile the code.
+Once all of the required dependencies gets installed successfully, now its the time to run and host the project on local development environment. Run the below command to do so. This webpack script will compile the code and will host the portal on localhost server.
 ```
 npm run serve
 ```
@@ -108,6 +117,25 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### Docker configuration
+
+To run StarWars project in docker container, the below commands needs to get executed.
+
+- Build docker image.
+```
+docker build -t starwars/dockerize-starwars-app .
+```
+
+- To validate if your image has created and to know the list of images available in your system locally. use the following command.
+```
+docker images
+
+```
+- Run StarWars app in docker container.
+```
+docker run -it -p 8081:8080 -d --rm --name dockerize-starwars-app-latest starwars/dockerize-starwars-app
+```
 
 ## References
 

@@ -5,6 +5,8 @@ export interface starWarsState {
   isCategoriesLoading: boolean;
   selectedCategory: object;
   isAllEntitiesEmpty: boolean;
-  selectedCategoryData: Array<iCharacter>;
-  selectedCharacter: object;
+  selectedCategoryData: Array<any>;
+  selectedCharacter: iCharacter;
+  isCharacterActionLoading: boolean;
+  isCharacterDeleteLoading: boolean;
 }

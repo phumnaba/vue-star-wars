@@ -34,6 +34,7 @@ import Vue from "vue";
 import CharactersTable from "@/components/CharactersTable.vue";
 import { GET_SELECTED_CATEGORY } from "@/store/modules/starwars/getters/getter-types";
 import { entitiesIconsMap } from "@/utilities";
+import { iCategory } from "@/interface/iCategory";
 
 export default Vue.extend({
   name: "EntityList",
@@ -42,12 +43,12 @@ export default Vue.extend({
   }),
   components: { CharactersTable },
   methods: {
-    goToSearch() {
+    goToSearch(): void {
       this.$router.push("/");
     },
   },
   computed: {
-    category() {
+    category(): iCategory {
       return this.$store.getters[GET_SELECTED_CATEGORY];
     },
     categoryHeader(): string {
